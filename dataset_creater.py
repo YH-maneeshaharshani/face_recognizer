@@ -8,16 +8,16 @@ cam=cv2.VideoCapture(0) # 0 is the default camera (open web cam)
 def insertorupdate(Id,Name,age): #function is for squlite database
 
     conn=sqlite3.connect('database.db')
-    cmd = "SELECT * FRM STUDENTS WHERE ID="+str(Id)
+    cmd = "SELECT * FROM STUDENT WHERE ID="+str(Id)
     cursor = conn.execute(cmd) # run the cmd query
     isRecordExist=0 # assume there is no record in our table
 
     for row in cursor: # if there is a record in the table then set isRecordExist=1
-        isRecordeExist =1
+        isRecordExist =1
     
     if(isRecordExist==1): # if there is a record exist in our table
-        conn.execute("UPDATE STUDENT SET Name=?,WHERE Id=?", (Name,Id)) # update the record
-        conn.execute("UPDATE STUDENT SET age=?,WHERE Id=?", (age,Id)) # update the record
+        conn.execute("UPDATE STUDENT SET Name=? WHERE Id=?", (Name,Id)) # update the record
+        conn.execute("UPDATE STUDENT SET age=? WHERE Id=?", (age,Id)) # update the record
 
     else: # if there is no recrd exist we insert the value
         conn.execute("INSERT INTO STUDENT(Id,Name,age) VALUES(?,?,?)",(Id,Name,age)) # insert the value in the table
@@ -31,7 +31,7 @@ age= input("Enter user Age: ")
 
 insertorupdate(Id,Name,age)
 
-smapleNum = 0 # assume there is no sample dataset
+SampleNum = 0 # assume there is no sample dataset
 while(True):
     ret,img = cam.read() #open camera
     gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) # convert colored image to black & white images
@@ -48,6 +48,6 @@ while(True):
 
     if(SampleNum>20): # if we have 20 sample dataset then break the loop
         break
-    cam.release() # close the camera
-    cv2.destroyAllWindow() #quite
+cam.release() # close the camera
+cv2.destroyAllWindows() #quite
 
