@@ -5,7 +5,7 @@ import sqlite3  # database
 faceDetecter= cv2.CascadeClassifier('haarcascade_frontalface_default.xml') #to detect faces using camera
 cam=cv2.VideoCapture(0) # 0 is the default camera (open web cam)
 
-def insertorupdate(Id,Name,age): #function is for squlite database
+def insertorupdate(Id,Name,age,faculty): #function is for squlite database
 
     conn=sqlite3.connect('database.db')
     cmd = "SELECT * FROM STUDENT WHERE ID="+str(Id)
@@ -18,9 +18,11 @@ def insertorupdate(Id,Name,age): #function is for squlite database
     if(isRecordExist==1): # if there is a record exist in our table
         conn.execute("UPDATE STUDENT SET Name=? WHERE Id=?", (Name,Id)) # update the record
         conn.execute("UPDATE STUDENT SET age=? WHERE Id=?", (age,Id)) # update the record
+        conn.execute("UPDATE STUDENT SET faculty=? WHERE Id=?", (faculty,Id))
+
 
     else: # if there is no recrd exist we insert the value
-        conn.execute("INSERT INTO STUDENT(Id,Name,age) VALUES(?,?,?)",(Id,Name,age)) # insert the value in the table
+        conn.execute("INSERT INTO STUDENT(Id,Name,age,faculty) VALUES(?,?,?,?)",(Id,Name,age,faculty)) # insert the value in the table
 
     conn.commit() # close all the  connection created in the sqlite 3
     conn.close() #save all th changes
@@ -28,8 +30,9 @@ def insertorupdate(Id,Name,age): #function is for squlite database
 Id=input("Enter user Id:")
 Name = input ("Enter user Name: ")
 age= input("Enter user Age: ")
+faculty= input("Enter user faculty: ")
 
-insertorupdate(Id,Name,age)
+insertorupdate(Id,Name,age,faculty)
 
 SampleNum = 0 # assume there is no sample dataset
 while(True):
