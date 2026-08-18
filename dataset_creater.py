@@ -49,7 +49,7 @@ while(True):
     cv2.imshow("Face",img) 
     cv2.waitKey(1)
 
-    if(SampleNum>20): # if we have 20 sample dataset then break the loop
+    if(SampleNum>40): # if we have 20 sample dataset then break the loop
         break
 cam.release() # close the camera
 cv2.destroyAllWindows() #quite
